@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>테이블 태그 실습</title>
+        <style>
+            table th {
+                width: 110px;
+                height: 50px;
+            }
+            .major{
+                background-color: aqua;
+            }
+
+            .edu{
+                background-color: grey;
+            }
+        </style>
+    </head>
+    <body>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>월</th>
+                    <th>화</th>
+                    <th>수</th>
+                    <th>목</th>
+                    <th>금</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>9:00</th>
+                    <td></td>
+                    <td></td>
+                    <td class="major" rowspan="2">역사와 문화</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>10:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>11:00</th>
+                    <td class="edu">채플</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>12:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>13:00</th>
+                    <td class="major" rowspan="3">인공지능확률론</td>
+                    <td></td>
+                    <td class="edu" rowspan="3">사고와표현</td>
+                    <td class="major" rowspan="3">객체지향프로그래밍</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>14:00</th>
+                    <td class="major" rowspan="3">웹프로그래밍</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>15:00</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>16:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>17:00</th>
+                    <td></td>
+                    <td class="major">인생설계와 진로</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>18:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="6">그 모든 일이 있음에도, 여전히 시간표다.</th>
+                </tr>
+            </tfoot>
+        </table>
+    </body>
+</html>
