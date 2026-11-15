@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>계산기</title>
+        <style>
+            h1 {
+                text-align: center;
+            }
+            .disp {
+                    width: 205px;
+                    height: 40px;
+                    margin-top: 3px;
+                }
+                input[type=button] {
+                    width: 50px;
+                    height: 50px;
+                    margin-top: 5px;
+                    text-align: center;
+                    vertical-align: middle;
+                }
+                #calc {
+                    width: 220px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+        </style>
+        <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function(){
+                $(".num").click(function(){
+                    let cur = $("#disp2").val();
+                    let n = $(this).val();
+                    $('#disp2').val(cur+n);
+                })
+                $(".ac").click(function(){
+                    $('#disp2').val('');
+                    $('#disp1').val('');
+                })
+                $(".equal").click(function(){
+                    let cur = $('#disp2').val();
+                    let nums = []
+                    let calcs = []
+                    
+                    let num = 0
+                    for(let c of cur){
+                        let n = Number(c)
+                        if(Number.isInteger(n)){
+                            num = num*10 + n
+                        }else{
+                            switch(c){
+                                case '+':
+                                    calcs.push(0)
+                                    break
+                                case '-':
+                                    calcs.push(1)
+                                    break
+                                case '*':
+                                    calcs.push(2)
+                                    break
+                                case '/':
+                                    calcs.push(3)
+                                    break
+                            }
+                            nums.push(Number.parseFloat(num))
+                            num = 0
+                        }
+                    }
+                    nums.push(Number.parseFloat(num))
+
+                    let len = calcs.length
+                    for(let i=0;i<len;i++){
+                        console.log(nums)
+                        console.log(calcs)
+
+                        if(calcs[i] == 2){
+                            let n1 = nums[i]
+                            let n2 = nums[i+1]
+                            nums.splice(i+1, 1)
+                            calcs.splice(i, 1)
+                            len--
+                            nums[i] = n1 * n2
+                            i--
+                        }
+                        else if(calcs[i] == 3){
+                            let n1 = nums[i]
+                            let n2 = nums[i+1]
+                            nums.splice(i+1, 1)
+                            calcs.splice(i, 1)
+                            len--
+                            nums[i] = n1 / n2
+                            i--
+                        }
+                    }
+                    
+                    len = calcs.length
+                    for(let i=0;i<len;i++){
+                        console.log(nums)
+                        console.log(calcs)
+
+                        if(calcs[i] == 0){
+                            let n1 = nums[i]
+                            let n2 = nums[i+1]
+                            nums.splice(i+1, 1)
+                            calcs.splice(i, 1)
+                            len--
+                            nums[i] = n1 + n2
+                            i--
+                        }
+                        else if(calcs[i] == 1){
+                            let n1 = nums[i]
+                            let n2 = nums[i+1]
+                            nums.splice(i+1, 1)
+                            calcs.splice(i, 1)
+                            len--
+                            nums[i] = n1 - n2
+                            i--
+                        }
+                    }
+
+                    $('#disp1').val(cur);
+                    $('#disp2').val(nums[0]);
+                })
+                $('.backspace').click(function(){
+                    let cur = $('#disp2').val()
+                    $('#disp2').val(cur.slice(0, -1))
+                })
+            })
+        </script>
+    </head>
+    <body>
+        <h1>계산기</h1>
+        <div id="calc">
+            <div>
+                <input type="text" class="disp" id="disp1" readonly>
+                <input type="text" class="disp" id="disp2" readonly>
+            </div>
+            <input type="button">
+            <input type="button">
+            <input type="button">
+            <input type="button" class="backspace" value="<-"><br>
+            <input type="button" class="num" value="7">
+            <input type="button" class="num" value="8">
+            <input type="button" class="num" value="9">
+            <input type="button" class="num" value="+"><br>
+            <input type="button" class="num" value="4">
+            <input type="button" class="num" value="5">
+            <input type="button" class="num" value="6">
+            <input type="button" class="num" value="-"><br>
+            <input type="button" class="num" value="1">
+            <input type="button" class="num" value="2">
+            <input type="button" class="num" value="3">
+            <input type="button" class="num" value="*"><br>
+            <input type="button" class="ac" value="AC">
+            <input type="button" class="num" value="0">
+            <input type="button" class="equal" value="=">
+            <input type="button" class="num" value="/"><br>
+        </div>
+    </body>
+</html>
