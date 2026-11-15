@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>계산기</title>
+        <style>
+            h1 {
+                text-align: center;
+            }
+            .disp {
+                    width: 205px;
+                    height: 40px;
+                    margin-top: 3px;
+                }
+                input[type=button] {
+                    width: 50px;
+                    height: 50px;
+                    margin-top: 5px;
+                    text-align: center;
+                    vertical-align: middle;
+                }
+                #calc {
+                    width: 220px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+        </style>
+        <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+        <script>
+            function calc(expr){
+                // 1. 숫자와 연산자로 분리 (맨 앞이나 연산자 바로 뒤의 '-'는 음수 부호로 처리)
+                let tokens = [];
+                let num = '';
+                for (let c of expr) {
+                    if ('+-*/'.includes(c) && !(c == '-' && num == '')) {
+                        tokens.push(parseFloat(num));
+                        tokens.push(c);
+                        num = '';
+                    } else {
+                        num += c;
+                    }
+                }
+                tokens.push(parseFloat(num));
+
+                // 2. 곱셈, 나눗셈 먼저 계산
+                let stack = [tokens[0]];
+                for (let i = 1; i < tokens.length; i += 2) {
+                    let op = tokens[i];
+                    let n = tokens[i + 1];
+                    if (op == '*') stack.push(stack.pop() * n);
+                    else if (op == '/') stack.push(stack.pop() / n);
+                    else stack.push(op, n);
+                }
+
+                // 3. 남은 덧셈, 뺄셈을 왼쪽부터 계산
+                let result = stack[0];
+                for (let i = 1; i < stack.length; i += 2) {
+                    if (stack[i] == '+') result += stack[i + 1];
+                    else result -= stack[i + 1];
+                }
+                return result;
+            }
+
+            $(document).ready(function(){
+                $(".num").click(function(){
+                    let cur = $("#disp2").val();
+                    let n = $(this).val();
+                    $('#disp2').val(cur+n);
+                })
+                $(".ac").click(function(){
+                    $('#disp2').val('');
+                    $('#disp1').val('');
+                })
+                $(".equal").click(function(){
+                    let cur = $('#disp2').val();
+                    let v = calc(cur);
+                    if (isNaN(v)) return; // "5+" 처럼 잘못된 식이면 무시
+                    $('#disp1').val(cur);
+                    $('#disp2').val(v);
+                })
+                $('.backspace').click(function(){
+                    let cur = $('#disp2').val()
+                    $('#disp2').val(cur.slice(0, -1))
+                })
+            })
+        </script>
+    </head>
+    <body>
+        <h1>계산기</h1>
+        <div id="calc">
+            <div>
+                <input type="text" class="disp" id="disp1" readonly>
+                <input type="text" class="disp" id="disp2" readonly>
+            </div>
+            <input type="button">
+            <input type="button">
+            <input type="button">
+            <input type="button" class="backspace" value="<-"><br>
+            <input type="button" class="num" value="7">
+            <input type="button" class="num" value="8">
+            <input type="button" class="num" value="9">
+            <input type="button" class="num" value="+"><br>
+            <input type="button" class="num" value="4">
+            <input type="button" class="num" value="5">
+            <input type="button" class="num" value="6">
+            <input type="button" class="num" value="-"><br>
+            <input type="button" class="num" value="1">
+            <input type="button" class="num" value="2">
+            <input type="button" class="num" value="3">
+            <input type="button" class="num" value="*"><br>
+            <input type="button" class="ac" value="AC">
+            <input type="button" class="num" value="0">
+            <input type="button" class="equal" value="=">
+            <input type="button" class="num" value="/"><br>
+        </div>
+    </body>
+</html>
